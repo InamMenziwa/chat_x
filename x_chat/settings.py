@@ -70,6 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'x_chat.wsgi.application'
+ASGI_APPLICATION = 'x_chat.asgi.application'
 
 
 # Database
