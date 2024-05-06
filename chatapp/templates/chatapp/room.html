@@ -1,7 +1,7 @@
 {{ chatroom.name }}
 <form action="" method="POST">
     <input type="text" name="text" placeholder="Enter message">
-    <button type="submit">Send</button>
+    <button type="button">Send</button>
 </form>
 {{ chatroom.slug | json_script:"json-chatroomname" }}
 <script>
@@ -18,5 +18,5 @@
     };
     ChatSocket.onclose = function(e){
         console.log("Socket closed")
-    };
+        };
 </script>
