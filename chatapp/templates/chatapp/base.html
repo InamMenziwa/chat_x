@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <nav class="shadow-lg h-15 py-3">
+        <div class="container flex flex-wrap justify-between mx-auto">
+            <a class="flex" href="">
+                <img class="h-10 mt-1 mr-4" src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/30_Atlassian_logo_logos-256.png" alt="">
+                <span class="self-center text-3xl font-semibold">X Chat</span>
+            </a>
+            <div class="width-full block w-auto">
+                <ul class="flex flex-row p-2 border rounded-lg border-gray-100 bg-blue-200">
+                    <li>
+                        <a class="block py-1 px-2 rounded bg-blue-500 text-white" href="{% url 'index' %}">rooms</a>
+                    </li>
+                    <li>
+                        <a class="block py-1 px-2 rounded " href="">about</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

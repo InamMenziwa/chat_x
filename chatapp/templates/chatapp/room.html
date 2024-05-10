@@ -1,8 +1,36 @@
-{{ chatroom.name }}
-<form action="" method="POST">
-    <input id="message" type="text" name="text" placeholder="Enter message">
-    <button id="send" type="submit">Send</button>
-</form>
+{% extends "chatapp/base.html" %}
+
+{% block body %}
+<div class="m-7 font-bold">
+    {{ chatroom.name }}
+</div>
+<div class="message-container ml-10 mb-5 pb-10 overflow-auto h-[700px]" id="message-div-container">
+    <div id="div_chat">
+        {% for chat in messages %}
+        <div class="message shadow-lg p-3 my-2 ml-5 rounded-lg w-1/2 bg-slate-900">
+            <div class="text-sm text-blue-500 font-bold">
+                {{ chat.user.username }}
+            </div>
+            <div class="text-white">
+            {{ chat.message_content }}
+            </div>
+            <div class="text-sm text-zinc-600 opacity-59">
+                {{ chat.date }}
+            </div>
+        </div>
+            
+        {% endfor %}
+    </div>
+</div>
+
+<div class="form-container fixed inset-x-0 bottom-0 bg-slate-900 p-4">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input class="rounded-md px-2" id="message" type="text" name="text" placeholder="Enter message">
+        <button class="text-white ml-5" id="send" type="submit">Send</button>
+    </form>
+</div>
+
 {{ chatroom.slug | json_script:"json-chatroomname" }}
 {{ request.user.username | json_script:"username" }}
 <script>
@@ -18,10 +46,16 @@
     ChatSocket.onmessage = function(e){
         const data = JSON.parse(e.data)
         if (data.message){
-            console.log("i got the messageeeeeeeeeeee", data.message)
+            let html = '<div class="message shadow-lg p-3 my-2 ml-5 rounded-lg w-1/2 bg-slate-900">' +
+                '<div class="text-sm text-blue-500 font-bold">' +
+                    data.user_name + '</div>' +
+                '<div class="text-white">' + data.message + '</div>' +
+                '<div class="text-sm text-zinc-600 opacity-59">' + 'just now' + '</div>' +
+                '</div>';
+            document.getElementById('div_chat').innerHTML+=html
+            scroll()
         }else{
-            alert("the message was empty"
-            )
+            alert("the message was empty")
         }
     };
     ChatSocket.onclose = function(e){
@@ -41,4 +75,10 @@
         }))
         message_input.value = ""
     }
+    function scroll(){
+        const div_box = document.getElementById("message-div-container")
+        div_box.scrollTop = div_box.scrollHeight;
+    }
+    scroll()
 </script>
+{% endblock %}
